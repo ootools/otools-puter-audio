@@ -25,5 +25,5 @@
   "screenshots": [],
   "summary": "Audio Studio（HeyPuter/everything 的波形与多轨音频编辑器）的 OTools 插件版：录音、剪辑、修复、混音与母带，带频谱编辑与录音室效果。音频在本机处理，工程与导出文件是本机目录里的普通文件，不走任何云账号。",
   "uuid": "otools-puter-audio",
-  "version": "0.1.2"
+  "version": "0.1.3"
 }
