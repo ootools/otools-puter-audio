@@ -68,9 +68,11 @@ const NOT_UI = [
  */
 const CONTEXT_RULES = [
   // 属性表里的展示字段：{ label: '…' }、title: '…'、'aria-label': '…'、data-tip: '…'
-  { re: /(?:^|[\s{,(])(?:label|title|heading|hint|note|description|placeholder|text|okLabel|cancelLabel|confirm|cancel|ok|tip|unit|why|reason|message|empty|sub|body|summary|about|help|detail|desc)\s*:\s*(['"])((?:[^'"\\\n]|\\.){2,400})\1/g, group: 2 },
+  { re: /(?:^|[\s{,(])(?:label|title|heading|hint|note|description|placeholder|text|okLabel|cancelLabel|confirm|cancel|ok|tip|unit|why|reason|message|empty|sub|body|summary|about|help|detail|desc|name)\s*:\s*(['"])((?:[^'"\\\n]|\\.){2,400})\1/g, group: 2 },
   { re: /['"](?:aria-label|data-tip|aria-labelledby|aria-describedby)['"]\s*:\s*(['"])((?:[^'"\\\n]|\\.){2,400})\1/g, group: 2 },
   // h('div.cls', {…}, '文本') / h('div.cls', '文本')
+  // h('button.btn', { … }, icon('x', 14), '文本')：图标参数夹在对象与文本之间
+  { re: /\bh\(\s*(['"])[^'"]*\1\s*,\s*\{[^{}]*\}\s*,\s*(?:[^,()]|\([^()]*\))*,\s*(['"])((?:[^'"\\\n]|\\.){3,400})\2/g, group: 3 },
   { re: /\bh\(\s*(['"])[^'"]*\1\s*,\s*(['"])((?:[^'"\\\n]|\\.){3,400})\2/g, group: 3 },
   { re: /\bh\(\s*(['"])[^'"]*\1\s*,\s*\{[^{}]*\}\s*,\s*(['"])((?:[^'"\\\n]|\\.){3,400})\2/g, group: 3 },
   // emptyState('icon', '标题', '正文')

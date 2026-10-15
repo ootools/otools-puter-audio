@@ -44,21 +44,26 @@ export const APP = {
    * 只写**叶子**，不写容器：写容器会把里面的「删除」「重命名」这类按钮
    * 一起跳过，界面上就永远留着英文。这里放的是用户自己起的文件名 / 轨名 /
    * 标记名 / 工作区名，翻译它们等于改用户的数据。
+   *
+   * 反过来，**界面文案所在的叶子不能写进来**。这几个类曾经写进来过，结果是
+   * 媒体浏览器的 `Home` / `Add Folder...`、轨道头上的效果名、效果架里的效果名
+   * 一直是英文——它们是界面文案，不是用户数据：
+   *   `.media-tree-name`（文件夹树，含 `Home` / `Add Folder...`）
+   *   `.mt-th-fxname`（轨道头效果芯片，含效果名与 `No effects`）
+   *   `.mx-fx-name`（混音器里的效果按钮，文本就是效果名）
+   *   `.rack-name`（效果架里那个可点的效果名按钮）
+   * 用真宿主探针逐面板核对可见文本才发现的。
    */
   i18nSkip: [
     '.doc-title',
     '.track-name',
     '.mt-th-name',
-    '.mt-th-fxname',
     '.mt-video-name',
     '.mx-name',
-    '.mx-fx-name',
-    '.rack-name',
     '.rack-target-name',
     '.name-cell',
     '.batch-name',
     '.media-preview-name',
-    '.media-tree-name',
     '.ws-name',
     '.sc-name',
     '.io-recover-name',

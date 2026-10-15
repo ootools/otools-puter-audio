@@ -63,10 +63,11 @@ const NOT_UI = [
 ];
 
 const CONTEXT_RULES = [
-  { re: /(?:^|[\s{,(])(?:label|title|heading|hint|note|description|placeholder|text|okLabel|cancelLabel|confirm|cancel|ok|tip|unit|why|reason|message|empty|sub|body|summary|about|help|detail|desc)\s*:\s*(['"])((?:[^'"\\\n]|\\.){2,400})\1/g, group: 2 },
+  { re: /(?:^|[\s{,(])(?:label|title|heading|hint|note|description|placeholder|text|okLabel|cancelLabel|confirm|cancel|ok|tip|unit|why|reason|message|empty|sub|body|summary|about|help|detail|desc|name)\s*:\s*(['"])((?:[^'"\\\n]|\\.){2,400})\1/g, group: 2 },
   { re: /['"](?:aria-label|data-tip|aria-labelledby|aria-describedby)['"]\s*:\s*(['"])((?:[^'"\\\n]|\\.){2,400})\1/g, group: 2 },
   { re: /\bh\(\s*(['"])[^'"]*\1\s*,\s*(['"])((?:[^'"\\\n]|\\.){3,400})\2/g, group: 3 },
   { re: /\bh\(\s*(['"])[^'"]*\1\s*,\s*\{[^{}]*\}\s*,\s*(['"])((?:[^'"\\\n]|\\.){3,400})\2/g, group: 3 },
+  { re: /\bh\(\s*(['"])[^'"]*\1\s*,\s*\{[^{}]*\}\s*,\s*(?:[^,()]|\([^()]*\))*,\s*(['"])((?:[^'"\\\n]|\\.){3,400})\2/g, group: 3 },
   { re: /\bemptyState\(\s*(['"])[^'"]*\1\s*,\s*(['"])((?:[^'"\\\n]|\\.){3,400})\2/g, group: 3 },
   { re: /\.textContent\s*=\s*(['"])((?:[^'"\\\n]|\\.){3,400})\1/g, group: 2 },
   { re: /\b(?:alert|confirm|toast|notify|status|message|error)\(\s*(['"])((?:[^'"\\\n]|\\.){3,400})\1/g, group: 2 },
