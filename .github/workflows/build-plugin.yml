@@ -1,0 +1,68 @@
+# 构建 OTools 插件的纯前端产物并上传 artifact。
+# 触发：push 到 main、PR、手动。
+#
+# 本 workflow 只构建前端：插件是纯前端的（无 native cdylib），
+# 产物即 dist/ 这份静态资源。
+#
+# 门禁只有两道：
+#   1. `sync-upstream.mjs --check` + `build.mjs` 的合成阶段——某条
+#      shell/edits.mjs 对不上上游时会直接报「命中 N 次，期望 M 次」，
+#      上游漂移导致的移植失配在这里就炸掉；
+#   2. `scripts/test.mjs`（移植层自己的测试：多语言、宿主桥、本地磁盘后端）。
+#
+# 上游应用自身的 900 多个测试**不在门禁内**：本插件不改编排/渲染等核心逻辑，
+# 那些行为由上游负责；而且它们的夹具（303 MB 的 .docx 样本）刻意没进快照，
+# 跑起来只会得到一片与移植无关的失败。详见 scripts/test.mjs 顶部说明。
+name: build-plugin
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 校验上游快照没被就地改过
+        run: node scripts/sync-upstream.mjs --check
+
+      - name: 安装依赖
+        # --legacy-peer-deps：npm 10 的 arborist 在解析 vitest 5 的
+        # 可选 peer（@vitest/browser-playwright）时会崩（edgesOut of null）。
+        run: npm ci --legacy-peer-deps
+
+      - name: 跑移植层测试
+        # 上游那900 多个测试不在门禁内：核心引擎行为由上游负责，且它们的
+        # 夹具（303 MB）没进快照，跑起来是一片与移植无关的红。详见
+        # scripts/test.mjs 顶部的说明。需要人工核对时用 `test.mjs --upstream`。
+        run: node scripts/test.mjs
+
+      - name: 构建 dist/
+        run: node scripts/build.mjs
+
+      - name: 打包并自检
+        run: |
+          node scripts/pack-plugin.mjs
+          node scripts/verify-plugin.mjs
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-dist
+          path: dist/
+          if-no-files-found: error
+
+      - name: 上传安装包
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-oplg
+          path: dist-pack/
+          if-no-files-found: error

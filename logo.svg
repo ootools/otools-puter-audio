@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Audio Studio">
+  <defs>
+    <linearGradient id="audbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0568f"/>
+      <stop offset="1" stop-color="#a61e6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#audbg)"/>
+  <!-- 波形：中间高、两侧低，像一段被选中的音频 -->
+  <g fill="#ffffff" opacity="0.92">
+    <rect x="43" y="110" width="8" height="36" rx="4"/>
+    <rect x="56.5" y="97" width="8" height="62" rx="4"/>
+    <rect x="70" y="82" width="8" height="92" rx="4"/>
+    <rect x="83.5" y="62" width="8" height="132" rx="4"/>
+    <rect x="97" y="80" width="8" height="96" rx="4"/>
+    <rect x="110.5" y="99" width="8" height="58" rx="4"/>
+    <rect x="124" y="86" width="8" height="84" rx="4"/>
+    <rect x="137.5" y="68" width="8" height="120" rx="4"/>
+    <rect x="151" y="91" width="8" height="74" rx="4"/>
+    <rect x="164.5" y="105" width="8" height="46" rx="4"/>
+    <rect x="178" y="94" width="8" height="68" rx="4"/>
+    <rect x="191.5" y="108" width="8" height="40" rx="4"/>
+    <rect x="205" y="114" width="8" height="28" rx="4"/>
+  </g>
+  <!-- 峰值：最高的那一根用暖色点出来 -->
+  <rect x="83.5" y="62" width="8" height="132" rx="4" fill="#ffd166"/>
+  <!-- 播放头 -->
+  <rect x="126.5" y="44" width="3" height="168" rx="1.5" fill="#ffffff" opacity="0.55"/>
+</svg>
