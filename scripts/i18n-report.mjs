@@ -117,7 +117,10 @@ function extractFrom(source) {
     while ((m = re.exec(source))) {
       const raw = m[rule.group];
       if (!raw) continue;
-      const value = raw.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\n/g, ' ');
+      // 与 readCatalog 用**同一套**还原规则。历史上这里把 `\n` 换成空格，
+      // 而词典侧的键还原成了真换行，于是多行 tooltip（`启用\n说明`）永远比对
+      // 不上——明明有译文却被算成缺口，报告覆盖率因此系统性偏低。
+      const value = unescapeLiteral(raw);
       if (value.length < 3 || value.length > 400) continue;
       if (!/[A-Za-z\u4e00-\u9fa5]/.test(value)) continue;
       if (NOT_UI.some((p) => p.test(value))) continue;
