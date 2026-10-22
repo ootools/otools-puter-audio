@@ -22,6 +22,8 @@ import { installI18n } from './i18n.js';
 import { installDomTranslation } from './dom-i18n.js';
 import { APP } from './app.js';
 import { usingHost, libraryDir } from './local.js';
+import { installMcpBridge } from './mcp.js';
+import { audioMcpTools } from './mcp-tools.js';
 
 let booted = false;
 
@@ -37,6 +39,12 @@ export function boot() {
   if (usingHost()) {
     libraryDir().catch(() => { /* 建不了目录不该让启动失败 */ });
   }
+
+  // MCP 桥挂在最后：宿主读 `window.__otoolsMcp` 时会用到上面装好的库目录能力，
+  // 所以它必须晚于 i18n / 主题就绪。挂载本身没有副作用（只赋值，不触发工具调用）。
+  // 领域级工具（读/改当前 session）在 `otools/mcp-tools.js`；活句柄（当前 Session）由
+  // overlay 入口 `main.js` 在应用就绪后经 `setAudioMcpContext` 交进来。
+  installMcpBridge({ extraTools: audioMcpTools() });
 
   if (typeof document !== 'undefined') {
     document.documentElement.dataset.otoolsPlugin = APP.id;

@@ -12,6 +12,7 @@
  */
 
 import './otools/boot.js';
+import { setAudioMcpContext } from './otools/mcp-context.js';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/shell.css';
@@ -23,6 +24,9 @@ import { createShell } from './ui/shell.js';
 import { openFiles } from './storage/files.js';
 
 const app = new App();
+// MCP 领域工具的活句柄：当前打开的 Session（app.active）。getter 捕获 app，
+// 切换/新建文档后自动跟上；领域工具经 setAudioMcpContext 从这里取。
+setAudioMcpContext({ editorContext: () => app.active });
 for (const install of FEATURES) install(app);
 createShell(app, document.getElementById('app'));
 app.setStatus(`Launched in ${(performance.now() / 1000).toFixed(2)} seconds`);

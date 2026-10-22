@@ -25,5 +25,52 @@
   "screenshots": [],
   "summary": "Audio Studio（HeyPuter/everything 的波形与多轨音频编辑器）的 OTools 插件版：录音、剪辑、修复、混音与母带，带频谱编辑与录音室效果。音频在本机处理，工程与导出文件是本机目录里的普通文件，不走任何云账号。",
   "uuid": "otools-puter-audio",
-  "version": "0.1.4"
+  "version": "0.2.0",
+  "mcp": {
+    "enabled": true,
+    "backend": "webview",
+    "namespace": "puter-audio",
+    "expose": [
+      "list_library",
+      "read_file",
+      "write_file",
+      "library_path",
+      "get_session",
+      "list_tracks",
+      "list_clips",
+      "read_clip",
+      "set_clip_gain",
+      "set_clip_fade",
+      "move_clip",
+      "trim_clip",
+      "split_clip",
+      "remove_clip",
+      "rename_track",
+      "set_track_level",
+      "add_track",
+      "set_playhead",
+      "select_clips"
+    ],
+    "annotations": {
+      "list_library": { "readOnly": true },
+      "read_file": { "readOnly": true },
+      "library_path": { "readOnly": true },
+      "write_file": { "readOnly": false, "destructive": true },
+      "get_session": { "readOnly": true },
+      "list_tracks": { "readOnly": true },
+      "list_clips": { "readOnly": true },
+      "read_clip": { "readOnly": true },
+      "set_clip_gain": { "readOnly": false, "destructive": false },
+      "set_clip_fade": { "readOnly": false, "destructive": false },
+      "move_clip": { "readOnly": false, "destructive": false },
+      "trim_clip": { "readOnly": false, "destructive": false },
+      "split_clip": { "readOnly": false, "destructive": false },
+      "remove_clip": { "readOnly": false, "destructive": true },
+      "rename_track": { "readOnly": false, "destructive": false },
+      "set_track_level": { "readOnly": false, "destructive": false },
+      "add_track": { "readOnly": false, "destructive": false },
+      "set_playhead": { "readOnly": false, "destructive": false },
+      "select_clips": { "readOnly": false, "destructive": false }
+    }
+  }
 }
