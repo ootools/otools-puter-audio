@@ -21,6 +21,7 @@
 import { installI18n } from './i18n.js';
 import { installDomTranslation } from './dom-i18n.js';
 import { APP } from './app.js';
+import { installOpenFileBridge } from './openfile.js';
 import { usingHost, libraryDir } from './local.js';
 import { installMcpBridge } from './mcp.js';
 import { audioMcpTools } from './mcp-tools.js';
@@ -45,6 +46,10 @@ export function boot() {
   // 领域级工具（读/改当前 session）在 `otools/mcp-tools.js`；活句柄（当前 Session）由
   // overlay 入口 `main.js` 在应用就绪后经 `setAudioMcpContext` 交进来。
   installMcpBridge({ extraTools: audioMcpTools() });
+
+  // 宿主投递的「打开文件」：必须在界面入口订阅之前接住（宿主对 webview 的
+  // 敲门可能早于 overlay 入口执行），桥会把投递暂存到有人订阅为止。
+  installOpenFileBridge();
 
   if (typeof document !== 'undefined') {
     document.documentElement.dataset.otoolsPlugin = APP.id;

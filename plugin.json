@@ -4,6 +4,17 @@
   "displayName": "Audio Studio",
   "displayNameCN": "音频编辑",
   "entry": "dist/index.html",
+  "fileAssociations": [
+    { "ext": "wav", "desc": "WAV 音频", "mime": "audio/wav" },
+    { "ext": "aiff", "desc": "AIFF 音频", "mime": "audio/aiff" },
+    { "ext": "aif", "desc": "AIFF 音频", "mime": "audio/aiff" },
+    { "ext": "flac", "desc": "FLAC 无损音频", "mime": "audio/flac" },
+    { "ext": "mp3", "desc": "MP3 音频", "mime": "audio/mpeg" },
+    { "ext": "m4a", "desc": "M4A 音频", "mime": "audio/mp4" },
+    { "ext": "ogg", "desc": "Ogg 音频", "mime": "audio/ogg" },
+    { "ext": "opus", "desc": "Opus 音频", "mime": "audio/opus" },
+    { "ext": "asesx", "desc": "Audio Studio 工程", "mime": "application/octet-stream" }
+  ],
   "quickDev": true,
   "hasAd": false,
   "icon": "🎚️",

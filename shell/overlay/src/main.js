@@ -12,6 +12,8 @@
  */
 
 import './otools/boot.js';
+import { onHostOpenFiles } from './otools/openfile.js';
+import * as host from './otools/host.js';
 import { setAudioMcpContext } from './otools/mcp-context.js';
 import './styles/tokens.css';
 import './styles/base.css';
@@ -36,6 +38,30 @@ const p = typeof window !== 'undefined' ? window.puter : null;
 if (p?.ui?.onLaunchedWithItems) {
   p.ui.onLaunchedWithItems((items) => openFiles(app, items));
 }
+
+/**
+ * 宿主的「打开方式」：系统里双击已绑定扩展名的音频/工程文件 → 用本插件打开。
+ *
+ * 走与「文件 ▸ 打开」和拖放完全相同的 `openFiles` 入口（按扩展名分流到工程/音频/
+ * MIDI 三种打开器）。字节由宿主读，不经过库路径解析——投递来的是本机任意路径，
+ * 不在库目录里。
+ */
+onHostOpenFiles((files) => {
+  void (async () => {
+    const opened = [];
+    for (const file of files) {
+      try {
+        const record = await host.readFile(file.path);
+        if (!record) continue;
+        const blob = host.base64ToBlob(record.dataBase64, record.mime);
+        opened.push(new File([blob], file.name, { type: record.mime }));
+      } catch (error) {
+        console.error('[otools] open delivered file failed', file.path, error);
+      }
+    }
+    if (opened.length) await openFiles(app, opened);
+  })();
+});
 
 // Retire the service worker from the previous version of this app.
 if ('serviceWorker' in navigator) {
