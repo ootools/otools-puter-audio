@@ -83,5 +83,6 @@
       "set_playhead": { "readOnly": false, "destructive": false },
       "select_clips": { "readOnly": false, "destructive": false }
     }
-  }
+  },
+  "openSourceUrl": "https://github.com/ootools/otools-puter-audio"
 }
